@@ -19,7 +19,7 @@ public class BoardController {
 	 */
 	@GetMapping("/") // layoutからのgetリクエストを受け取る？
 	public String index(Model model) { //model?
-		model.addAttribute("form", PostFactory.newPost()); //form??
+		model.addAttribute("form", PostFactory.newPost()); //form ←キーワード
 		return "layout";
 	}
 

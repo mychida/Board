@@ -1,11 +1,11 @@
-<form method="POST" action="#" th:action="@{${path}}" th:object="${form}"> <!--#は何？ -->
+<form method="POST" action="#" th:action="@{${path}}" th:object="${form}"> 
     <input type="hidden" th:field="*{id}" />
     <section id="form">
         <dl class="clearfix">
-			<!-- th:for="${#ids.next('author')}" ??-->
+			<!-- th:for="${#ids.next('author')}" ?? idを生成してくれるやつ-->
             <dt><label th:for="${#ids.next('author')}" class="required">投稿者</label></dt>
             <dd>
-                <div><input type="text" th:field="*{author}" /></div>
+                <div><input type="text" th:field="*{author}" /></div><!--上で生成したauthorを当てはめている-->
             </dd>
             <dt><label th:for="${#ids.next('title')}" class="required">タイトル</label></dt>
             <dd>
@@ -21,11 +21,11 @@
 </form>
 <section id="posts">
     <ul>
-        <li th:each="post : ${list}"> <!--each→繰り返し th:each="変数":${コレクション}-->
+        <li th:each="post : ${list}"> <!--each→繰り返し th:each="変数":${コレクション}　これからあてはめていく-->
             <article class="post">
                 <ul>
                     <li>
-                        <h3 th:text="${post.author}" /> <!-- "${post.author}"?? -->
+                        <h3 th:text="${post.author}" /> <!-- "${post.author}"?? 今後使う-->
                     </li>
                     <li>
                         <h2 th:text="${post.title}" />
