@@ -45,7 +45,7 @@ public class PostFactory {
 	 * @param post 投稿
 	 * @return 投稿
 	 */
-	public static Post updatedPost(Post post, Post form) { //form?
+	public static Post updatedPost(Post post, Post form) { 
 		post.setAuthor(form.getAuthor());
 		post.setTitle(form.getTitle());
 		post.setBody(form.getBody());
