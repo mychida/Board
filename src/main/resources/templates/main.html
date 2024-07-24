@@ -35,8 +35,7 @@
 <section id="posts">
     <ul>
 		<!--each→繰り返し th:each="変数":${コレクション}-->
-		<!--th:unless="${post.deleted}"は削除済み(deletedフィールドがtrueの投稿)を表示させないために追加-->
-        <li th:each="post : ${list}" th:unless="${post.deleted}"> 
+        <li th:each="post : ${list}"> 
             <article class="post">
                 <ul>
                     <li>
