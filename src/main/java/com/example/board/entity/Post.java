@@ -3,6 +3,9 @@ package com.example.board.entity;
 
 import java.util.Date;
 
+import com.example.board.validation.Group1;
+import com.example.board.validation.Group2;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,20 +31,20 @@ public class Post {
 
 	/**投稿者*/
 	@Column(length = 20, nullable = false)
-	@NotEmpty
-	@Size(min = 1, max = 20)
+	@NotEmpty(groups = Group1.class)
+	@Size(min = 1, max = 20, groups = Group2.class)
 	private String author = null;
 
 	/**タイトル*/
 	@Column(length = 20, nullable = false)
-	@NotEmpty
-	@Size(min = 1, max = 20)
+	@NotEmpty(groups = Group1.class)
+	@Size(min = 1, max = 20, groups = Group2.class)
 	private String title = null;
 
 	/**内容*/
 	@Column(length = 1000, nullable = false)
-	@NotEmpty
-	@Size(min = 1, max = 1000)
+	@NotEmpty(groups = Group1.class)
+	@Size(min = 1, max = 1000, groups =Group2.class)
 	private String body = null;
 
 	/**登録日時*/

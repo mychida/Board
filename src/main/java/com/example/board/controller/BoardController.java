@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.board.entity.Post;
 import com.example.board.factory.PostFactory;
 import com.example.board.repository.PostRepository;
+import com.example.board.validation.GroupOrder;
 
 /**
  * 掲示板のフロントコントローラー
@@ -46,7 +47,7 @@ public class BoardController {
 	//これまでの投稿を全部取得してmodelに保存するのはわかるが
 	//returnでmodelを返しているのがわからない????
 	private Model setList(Model model) {
-		List<Post> list = repository.findAll();
+		List<Post> list = repository.findByDeletedFalseOrderByUpdatedDateDesc();
 		model.addAttribute("list", list);
 		return model;
 	}
@@ -59,7 +60,7 @@ public class BoardController {
 	 */
 	@PostMapping("/create") //???????
 	//BindingResult←エラー時の情報格納用
-	public String create(@ModelAttribute("form") @Validated Post form, BindingResult result, Model model) {
+	public String create(@ModelAttribute("form") @Validated(GroupOrder.class) Post form, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			//savaAndFlushメソッドで、formに格納された投稿内容を保存する
 			repository.saveAndFlush(PostFactory.createPost(form));
@@ -97,7 +98,7 @@ public class BoardController {
 	 * @return テンプレート
 	 */
 	@PostMapping("/update")
-	public String update(@ModelAttribute("form") @Validated Post form, BindingResult result,Model model) {
+	public String update(@ModelAttribute("form") @Validated(GroupOrder.class) Post form, BindingResult result,Model model) {
 		if(!result.hasErrors()) {
 			//編集する投稿を、findByIdメソッドで取り出す
 			//Optional←nullかどうかのチェックを簡潔にする・nullの可能性があることを明示できる
