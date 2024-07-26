@@ -1,27 +1,42 @@
 <form method="POST" action="#" th:action="@{${path}}" th:object="${form}"> 
+	<ul class="errs">
+		<li th:each="error : ${#fields.detailedErrors()}" th:test="${error.message}" class="err" />
+	</ul>
     <input type="hidden" th:field="*{id}" />
     <section id="form">
         <dl class="clearfix">
-			<!-- th:for="${#ids.next('author')}" ?? idを生成してくれるやつ-->
+			<!-- th:for="${#ids.next('author')}" → idを生成してくれるやつ-->
             <dt><label th:for="${#ids.next('author')}" class="required">投稿者</label></dt>
             <dd>
-                <div><input type="text" th:field="*{author}" /></div><!--上で生成したauthorを当てはめている-->
+                <div>
+					<input type="text" th:field="*{author}" />
+					<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" th:errorclass="err" />
+				</div>
             </dd>
             <dt><label th:for="${#ids.next('title')}" class="required">タイトル</label></dt>
             <dd>
-                <div><input type="text" th:field="*{title}" /></div>
+                <div>
+					<input type="text" th:field="*{title}" />
+					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err" />
+				</div>
             </dd>
             <dt><label th:for="${#ids.next('body')}" class="required">内容</label></dt>
             <dd>
-                <div><textarea th:field="*{body}"></textarea></div>
+                <div>
+					<textarea th:field="*{body}"></textarea>
+					<span th:if="${#fields.hasErrors('body')}" th:errors="*{body}" th:errorclass="err" />
+				</div>
             </dd>
         </dl>
         <button type="submit">送信</button>
     </section>
 </form>
+<!--以下はカリキュラム18では表示されてるが内容が入っていなくて小さくなっている なんで？-->
 <section id="posts">
     <ul>
-        <li th:each="post : ${list}"> <!--each→繰り返し th:each="変数":${コレクション}　これからあてはめていく-->
+		<!--each→繰り返し th:each="変数":${コレクション}-->
+		<!--th:unless="${post.deleted}"は削除済み(deletedフィールドがtrueの投稿)を表示させないために追加-->
+        <li th:each="post : ${list}" th:unless="${post.deleted}"> 
             <article class="post">
                 <ul>
                     <li>
