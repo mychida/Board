@@ -83,7 +83,7 @@ public class BoardController {
 	public String edit(@ModelAttribute("form") Post form, Model model) {
 		//編集する投稿を、findByIdメソッドで検索して取り出す
 		//form.getId()←どこのメソッド？？？
-		Optional<Post> post  = repository.findById(form.getId());
+		Optional<Post> post = repository.findById(form.getId());
 		//取り出した投稿をmodelに保存
 		model.addAttribute("form", post);
 		model = setList(model);
@@ -122,13 +122,14 @@ public class BoardController {
 	 * @param model モデル
 	 * @return テンプレート
 	 */
-	@GetMapping(value = "/delete")
+	@GetMapping(value = "/delete") //Value = /deleteはどこと対応？
 	public String delete(@ModelAttribute("form") Post form, Model model) {
 		//削除する投稿を、findById メソッドで取り出す
 		Optional<Post> post = repository.findById(form.getId());
 		/**deletedPostメソッドの中の、setDeleted(true)で削除済みの設定をしてから、
 		 * saveAndFlushメソッドを呼び出し保存
 		 */
+		//??post.get()は何？
 		repository.saveAndFlush(PostFactory.deletedPost(post.get()));
 		model.addAttribute("form", PostFactory.newPost());
 		model = setList(model);
